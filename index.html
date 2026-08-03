@@ -1,24 +1,105 @@
-<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Nova Lens V5</title><style>
-body{font-family:Arial;margin:0;background:#f4f7fb}header{background:#0b3d91;color:#fff;padding:15px;text-align:center}
-nav{background:#08306f;padding:10px;text-align:center}nav a{color:#fff;margin:0 10px;text-decoration:none}
-.hero{padding:60px;text-align:center;background:linear-gradient(135deg,#0b3d91,#2d8cff);color:#fff}
-input,select,textarea{width:100%;padding:10px;margin:8px 0}form{max-width:500px;margin:auto;background:#fff;padding:20px;border-radius:10px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px;padding:20px}.card{background:#fff;padding:15px;border-radius:10px}
-footer{text-align:center;background:#0b3d91;color:#fff;padding:20px}
-</style></head><body>
-<header><h1>Nova Lens</h1></header><nav><a href='#'>Home</a><a href='#products'>Products</a><a href='#order'>Order</a><a href='#contact'>Contact</a></nav>
-<section class='hero'><h2>Premium Contact Lenses</h2><p>See Clearly. Live Confidently.</p></section>
-<section id='products' class='grid'>
-<div class='card'><h3>Colored Lenses</h3><p>Rs.2500</p></div>
-<div class='card'><h3>Power Lenses</h3><p>Rs.3000</p></div>
-<div class='card'><h3>Yearly Lenses</h3><p>Rs.4500</p></div>
-</section>
-<section id='order'><h2 style='text-align:center'>Order Form</h2><form>
-<input placeholder='Full Name'><input placeholder='Phone Number'>
-<select><option>Colored Lenses</option><option>Power Lenses</option><option>Yearly Lenses</option></select>
-<input placeholder='Quantity'>
-<textarea placeholder='Delivery Address'></textarea>
-<button type='submit'>Place Order</button>
-</form></section>
-<section id='contact' style='padding:20px;text-align:center'><h2>Contact</h2><p>WhatsApp:0349-4908724<br>Email: novalens.official786@gmail.com</p></section>
-<footer>©2026 Nova Lens</footer></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Lens - Premium Contact Lenses</title>
+  <style>
+    body{font-family:Arial, sans-serif; margin:0; color:#1a2b4c;}
+    .navbar{background:#1a2b4c; color:white; padding:15px 20px; display:flex; justify-content:space-between; align-items:center;}
+    .navbar a{color:white; text-decoration:none; margin:0 10px;}
+    .hero{background:linear-gradient(90deg, #1a2b4c 50%, #2a4a8c); color:white; padding:60px 20px; display:flex; align-items:center; flex-wrap:wrap;}
+    .hero-text{flex:1; min-width:300px;}
+    .btn-whatsapp{background:#25D366; color:white; padding:12px 20px; border-radius:8px; text-decoration:none; display:inline-block;}
+    .products{display:flex; gap:20px; justify-content:center; padding:40px 20px; flex-wrap:wrap;}
+    .card{border:1px solid #ddd; border-radius:12px; padding:15px; width:250px; text-align:center;}
+    .card img{width:100%; border-radius:8px;}
+    .btn-order{background:#1a2b4c; color:white; padding:10px; border-radius:8px; text-decoration:none; display:block; margin-top:10px;}
+    .form-section{padding:40px 20px; background:#f8f9ff;}
+    .form-section input, .form-section select{width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px;}
+    .footer{background:#1a2b4c; color:white; padding:30px 20px; text-align:center;}
+    .floating-btn{position:fixed; bottom:20px; right:20px; background:#25D366; color:white; padding:14px 20px; border-radius:50px; text-decoration:none; font-weight:bold;}
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div><b>N</b> Nova Lens</div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#products">Products</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1>Premium Contact Lenses</h1>
+      <p>High quality lenses for a clearer, brighter and more confident you.</p>
+      <a href="https://wa.me/923494908724" class="btn-whatsapp">📱 Order on WhatsApp</a>
+    </div>
+    <img src="lens-finger.jpg" width="300">
+  </div>
+
+  <h2 id="products" style="text-align:center; margin-top:40px;">Our Products</h2>
+  <div class="products">
+    <div class="card">
+      <img src="colored-eye.jpg">
+      <h3>Colored Lenses</h3>
+      <p>Rs.2500</p>
+      <a href="https://wa.me/923494908724?text=I want Colored Lenses" class="btn-order">Order Now</a>
+    </div>
+    <div class="card">
+      <img src="power-eye.jpg">
+      <h3>Power Lenses</h3>
+      <p>Rs.3000</p>
+      <a href="https://wa.me/923494908724?text=I want Power Lenses" class="btn-order">Order Now</a>
+    </div>
+    <div class="card">
+      <img src="yearly-lens.jpg">
+      <h3>Yearly Lenses</h3>
+      <p>Rs.4500</p>
+      <a href="https://wa.me/923494908724?text=I want Yearly Lenses" class="btn-order">Order Now</a>
+    </div>
+  </div>
+
+  <div id="order" class="form-section">
+    <h2 style="text-align:center;">Order Form</h2>
+    <form onsubmit="sendWhatsApp(); return false;">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="phone" placeholder="Phone Number" required>
+      <select id="product">
+        <option>Colored Lenses</option>
+        <option>Power Lenses</option>
+        <option>Yearly Lenses</option>
+      </select>
+      <input type="text" id="qty" placeholder="Quantity">
+      <input type="text" id="address" placeholder="Delivery Address" required>
+      <button type="submit" class="btn-whatsapp" style="width:100%; border:none;">📱 Place Order on WhatsApp</button>
+    </form>
+  </div>
+
+  <div id="contact" class="footer">
+    <p><b>WhatsApp:</b> 0349-4908724</p>
+    <p><b>Email:</b> novalens.official786@gmail.com</p>
+    <p><b>We Deliver:</b> All Over Pakistan</p>
+    <p>©2026 Nova Lens. All Rights Reserved.</p>
+  </div>
+
+  <a href="https://wa.me/923494908724" class="floating-btn">💬 Chat Now</a>
+
+  <script>
+    function sendWhatsApp(){
+      let name = document.getElementById('name').value;
+      let phone = document.getElementById('phone').value;
+      let product = document.getElementById('product').value;
+      let qty = document.getElementById('qty').value;
+      let address = document.getElementById('address').value;
+      let msg = `New Order:%0AName: ${name}%0APhone: ${phone}%0AProduct: ${product}%0AQty: ${qty}%0AAddress: ${address}`;
+      window.open(`https://wa.me/923494908724?text=${msg}`);
+    }
+  </script>
+
+</body>
+</html>
