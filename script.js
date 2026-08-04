@@ -47,13 +47,6 @@ items.forEach(item => {
   observer.observe(item);
 });
 
-// ===== Product Button Effect =====
-document.querySelectorAll(".buy").forEach(btn => {
-  btn.addEventListener("click", function(e) {
-    e.preventDefault();
-    alert("Thank you! WhatsApp ordering will be connected here.");
-  });
-});
 
 // ===== Order Button =====
 document.querySelectorAll(".order-btn").forEach(btn => {
