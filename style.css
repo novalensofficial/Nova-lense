@@ -444,3 +444,38 @@ nav ul{
     background:#e68900;
     transform:translateY(-3px);
 }
+/* ===== CART ICON ===== */
+
+.cart-icon{
+    position:fixed;
+    top:20px;
+    right:20px;
+    background:#fff;
+    color:#0b3d91;
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+    box-shadow:0 8px 20px rgba(0,0,0,.2);
+    cursor:pointer;
+    z-index:1000;
+}
+
+#cartCount{
+    position:absolute;
+    top:-5px;
+    right:-5px;
+    background:red;
+    color:#fff;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:bold;
+}
