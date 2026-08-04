@@ -58,81 +58,38 @@ document.querySelectorAll(".order-btn").forEach(btn => {
   });
 });
 
-// ===== CART =====
-
-let cartCount = 0;
-
-function toggleCart() {
-    document.getElementById("cart").classList.toggle("active");
-}
-
-document.querySelectorAll(".cart-btn").forEach(btn => {
-
-    btn.addEventListener("click", function () {
-
-        cartCount++;
-
-        document.getElementById("cartCount").innerText = cartCount;
-
-        const card = this.closest(".card");
-
-        const name = card.querySelector("h3").innerText;
-
-        const price = card.querySelector("p").innerText;
-
-        const item = document.createElement("div");
-
-        item.innerHTML = `
-            <p><strong>${name}</strong></p>
-            <p>${price}</p>
-            <hr>
-        `;
-
-        document.getElementById("cart-items").appendChild(item);
-
-        toggleCart();
-
-    });
-
-});
-
-// ===== NOVA LENS CART =====
+// ===== SHOPPING CART =====
 
 let cart = [];
 let total = 0;
 
 function toggleCart() {
-    document.getElementById("cart").classList.toggle("active");
+  document.getElementById("cart").classList.toggle("active");
 }
 
 document.querySelectorAll(".cart-btn").forEach(button => {
+  button.addEventListener("click", function () {
 
-    button.addEventListener("click", function () {
+    const card = this.closest(".card");
+    const name = card.querySelector("h3").innerText;
+    const price = 1499;
 
-        const card = this.closest(".card");
+    cart.push({ name, price });
 
-        const name = card.querySelector("h3").innerText;
-        const priceText = card.querySelector("p").innerText;
-        const price = parseInt(priceText.replace(/[^\d]/g, ""));
+    document.getElementById("cartCount").innerText = cart.length;
 
-        cart.push({ name, price });
+    total += price;
+    document.getElementById("cart-total").innerText = total;
 
-        document.getElementById("cartCount").innerText = cart.length;
+    const item = document.createElement("div");
+    item.innerHTML = `
+      <p><strong>${name}</strong></p>
+      <p>PKR ${price}</p>
+      <hr>
+    `;
 
-        total += price;
-        document.getElementById("cart-total").innerText = total.toLocaleString();
+    document.getElementById("cart-items").appendChild(item);
 
-        const item = document.createElement("div");
-
-        item.innerHTML = `
-            <p><strong>${name}</strong></p>
-            <p>PKR ${price.toLocaleString()}</p>
-            <hr>
-        `;
-
-        document.getElementById("cart-items").appendChild(item);
-
-        document.getElementById("cart").classList.add("active");
-    });
-
+    document.getElementById("cart").classList.add("active");
+  });
 });
