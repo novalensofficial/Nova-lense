@@ -95,3 +95,44 @@ document.querySelectorAll(".cart-btn").forEach(btn => {
     });
 
 });
+
+// ===== NOVA LENS CART =====
+
+let cart = [];
+let total = 0;
+
+function toggleCart() {
+    document.getElementById("cart").classList.toggle("active");
+}
+
+document.querySelectorAll(".cart-btn").forEach(button => {
+
+    button.addEventListener("click", function () {
+
+        const card = this.closest(".card");
+
+        const name = card.querySelector("h3").innerText;
+        const priceText = card.querySelector("p").innerText;
+        const price = parseInt(priceText.replace(/[^\d]/g, ""));
+
+        cart.push({ name, price });
+
+        document.getElementById("cartCount").innerText = cart.length;
+
+        total += price;
+        document.getElementById("cart-total").innerText = total.toLocaleString();
+
+        const item = document.createElement("div");
+
+        item.innerHTML = `
+            <p><strong>${name}</strong></p>
+            <p>PKR ${price.toLocaleString()}</p>
+            <hr>
+        `;
+
+        document.getElementById("cart-items").appendChild(item);
+
+        document.getElementById("cart").classList.add("active");
+    });
+
+});
