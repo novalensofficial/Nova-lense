@@ -479,3 +479,47 @@ nav ul{
     font-size:12px;
     font-weight:bold;
 }
+/* ===== SHOPPING CART ===== */
+
+.cart{
+    position:fixed;
+    top:0;
+    right:-360px;
+    width:350px;
+    height:100%;
+    background:#fff;
+    box-shadow:-5px 0 20px rgba(0,0,0,.2);
+    transition:.4s;
+    z-index:9999;
+    display:flex;
+    flex-direction:column;
+}
+
+.cart.active{
+    right:0;
+}
+
+.cart-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:#0b3d91;
+    color:#fff;
+    padding:20px;
+}
+
+#cart-items{
+    flex:1;
+    overflow-y:auto;
+    padding:20px;
+}
+
+.cart-footer{
+    padding:20px;
+    border-top:1px solid #ddd;
+}
+
+.cart-header span{
+    cursor:pointer;
+    font-size:22px;
+}
