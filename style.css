@@ -422,3 +422,25 @@ nav ul{
 }
 
 }
+
+/* ===== ADD TO CART BUTTON ===== */
+
+.cart-btn{
+    width:80%;
+    padding:12px;
+    margin:15px auto;
+    display:block;
+    background:#ff9800;
+    color:#fff;
+    border:none;
+    border-radius:40px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.cart-btn:hover{
+    background:#e68900;
+    transform:translateY(-3px);
+}
