@@ -57,3 +57,41 @@ document.querySelectorAll(".order-btn").forEach(btn => {
     });
   });
 });
+
+// ===== CART =====
+
+let cartCount = 0;
+
+function toggleCart() {
+    document.getElementById("cart").classList.toggle("active");
+}
+
+document.querySelectorAll(".cart-btn").forEach(btn => {
+
+    btn.addEventListener("click", function () {
+
+        cartCount++;
+
+        document.getElementById("cartCount").innerText = cartCount;
+
+        const card = this.closest(".card");
+
+        const name = card.querySelector("h3").innerText;
+
+        const price = card.querySelector("p").innerText;
+
+        const item = document.createElement("div");
+
+        item.innerHTML = `
+            <p><strong>${name}</strong></p>
+            <p>${price}</p>
+            <hr>
+        `;
+
+        document.getElementById("cart-items").appendChild(item);
+
+        toggleCart();
+
+    });
+
+});
