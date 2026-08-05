@@ -166,3 +166,23 @@ document.getElementById("checkoutBtn").addEventListener("click", function(e){
     );
 
 });
+
+const searchInput = document.getElementById("searchInput");
+
+searchInput.addEventListener("keyup", function(){
+
+    const value = this.value.toLowerCase();
+
+    document.querySelectorAll(".card").forEach(card=>{
+
+        const name = card.querySelector("h3").innerText.toLowerCase();
+
+        if(name.includes(value)){
+            card.style.display="block";
+        }else{
+            card.style.display="none";
+        }
+
+    });
+
+});
