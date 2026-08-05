@@ -82,11 +82,26 @@ document.querySelectorAll(".cart-btn").forEach(button => {
     document.getElementById("cart-total").innerText = total;
 
     const item = document.createElement("div");
-    item.innerHTML = `
-      <p><strong>${name}</strong></p>
-      <p>PKR ${price}</p>
-      <hr>
-    `;
+
+item.className = "cart-item";
+
+item.innerHTML = `
+<div class="cart-row">
+  <div>
+    <strong>${name}</strong><br>
+    <small>PKR ${price}</small>
+  </div>
+
+  <div class="qty">
+    <button class="minus">−</button>
+    <span class="quantity">1</span>
+    <button class="plus">+</button>
+  </div>
+
+  <button class="remove">✖</button>
+</div>
+<hr>
+`;
 
     document.getElementById("cart-items").appendChild(item);
 
