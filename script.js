@@ -142,3 +142,27 @@ remove.addEventListener("click", () => {
     document.getElementById("cart").classList.add("active");
   });
 });
+
+document.getElementById("checkoutBtn").addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    if(cart.length === 0){
+        alert("Your cart is empty.");
+        return;
+    }
+
+    let message = "🛒 *Nova Lens Order*%0A%0A";
+
+    cart.forEach((item,index)=>{
+        message += `${index+1}. ${item.name} - PKR ${item.price}%0A`;
+    });
+
+    message += `%0A💰 Total: PKR ${total}`;
+
+    window.open(
+        `https://wa.me/923494908724?text=${message}`,
+        "_blank"
+    );
+
+});
