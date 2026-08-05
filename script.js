@@ -102,7 +102,41 @@ item.innerHTML = `
 </div>
 <hr>
 `;
+const qty = item.querySelector(".quantity");
+const plus = item.querySelector(".plus");
+const minus = item.querySelector(".minus");
+const remove = item.querySelector(".remove");
 
+let quantity = 1;
+
+plus.addEventListener("click", () => {
+    quantity++;
+    qty.innerText = quantity;
+
+    total += price;
+    document.getElementById("cart-total").innerText = total;
+});
+
+minus.addEventListener("click", () => {
+    if (quantity > 1) {
+        quantity--;
+        qty.innerText = quantity;
+
+        total -= price;
+        document.getElementById("cart-total").innerText = total;
+    }
+});
+
+remove.addEventListener("click", () => {
+    total -= (price * quantity);
+    document.getElementById("cart-total").innerText = total;
+
+    cart.pop();
+    document.getElementById("cartCount").innerText = cart.length;
+
+    item.remove();
+});
+    
     document.getElementById("cart-items").appendChild(item);
 
     document.getElementById("cart").classList.add("active");
