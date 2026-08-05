@@ -242,20 +242,6 @@ animation:float 4s ease-in-out infinite;
     margin:15px 0;
 }
 
-.buy{
-    display:inline-block;
-    margin-bottom:25px;
-    padding:12px 28px;
-    background:#0b3d91;
-    color:#fff;
-    text-decoration:none;
-    border-radius:40px;
-    transition:.3s;
-}
-
-.buy:hover{
-    background:#25D366;
-}
 
 /* ===== WHY CHOOSE US ===== */
 
