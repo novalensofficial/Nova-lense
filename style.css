@@ -546,3 +546,18 @@ height:30px;
 border-radius:50%;
 cursor:pointer;
 }
+
+.search-box{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.search-box input{
+    width:320px;
+    max-width:90%;
+    padding:14px 20px;
+    border:2px solid #0b3d91;
+    border-radius:40px;
+    outline:none;
+    font-size:16px;
+}
