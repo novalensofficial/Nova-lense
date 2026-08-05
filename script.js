@@ -186,3 +186,13 @@ searchInput.addEventListener("keyup", function(){
     });
 
 });
+
+document.querySelectorAll(".wishlist").forEach(btn => {
+
+    btn.addEventListener("click", function(){
+
+        this.classList.toggle("active");
+
+    });
+
+});
