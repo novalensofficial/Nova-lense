@@ -196,21 +196,3 @@ document.querySelectorAll(".wishlist").forEach(btn => {
     });
 
 });
-
-function filterProducts(color){
-
-    document.querySelectorAll(".card").forEach(card=>{
-
-        if(color==="all"){
-            card.style.display="block";
-        }
-        else if(card.classList.contains(color)){
-            card.style.display="block";
-        }
-        else{
-            card.style.display="none";
-        }
-
-    });
-
-}
