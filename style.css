@@ -587,3 +587,21 @@ cursor:pointer;
 .wishlist.active{
     color:red;
 }
+.filter-buttons{
+    text-align:center;
+    margin:20px 0 35px;
+}
+
+.filter-buttons button{
+    margin:5px;
+    padding:10px 20px;
+    border:none;
+    border-radius:25px;
+    background:#0b3d91;
+    color:#fff;
+    cursor:pointer;
+}
+
+.filter-buttons button:hover{
+    background:#25D366;
+}
