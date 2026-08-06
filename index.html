@@ -279,9 +279,53 @@ class="whatsapp">
     <div id="cart-items"></div>
 
     <div class="cart-footer">
-        <h3>Total: PKR <span id="cart-total">0</span></h3>
-        
-    </div><a href="#" class="btn1" id="checkoutBtn">Checkout on WhatsApp</a>
+
+    <h3>Total: PKR <span id="cart-total">0</span></h3>
+
+    <div class="checkout-form">
+
+        <input type="text" id="customer-name" placeholder="Full Name" required>
+
+        <input type="tel" id="customer-phone" placeholder="Phone Number" required>
+
+        <input type="email" id="customer-email" placeholder="Email (Optional)">
+
+        <input type="text" id="customer-city" placeholder="City" required>
+
+        <textarea id="customer-address"
+        placeholder="Complete Address"
+        rows="3"
+        required></textarea>
+
+        <h4>Payment Method</h4>
+
+        <label>
+            <input type="radio" name="payment" value="Cash on Delivery" checked>
+            Cash on Delivery
+        </label>
+
+        <label>
+            <input type="radio" name="payment" value="JazzCash">
+            JazzCash
+        </label>
+
+        <label>
+            <input type="radio" name="payment" value="EasyPaisa">
+            EasyPaisa
+        </label>
+
+        <label>
+            <input type="radio" name="payment" value="Bank Transfer">
+            Bank Transfer
+        </label>
+
+        <button class="btn1" id="checkoutBtn">
+            Place Order
+        </button>
+
+    </div>
+
+    </div>
 
   </div>
 <script src="script.js"></script>
