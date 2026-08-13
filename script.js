@@ -1,3 +1,21 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCfuechqNO8ghaiTNRDmQaNTKhxYRQJr34",
+  authDomain: "nova-lens-110ff.firebaseapp.com",
+  projectId: "nova-lens-110ff",
+  storageBucket: "nova-lens-110ff.firebasestorage.app",
+  messagingSenderId: "954111426491",
+  appId: "1:954111426491:web:eda78b7336b88cf46d4e9e"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 // ===== Smooth Scroll for Navigation =====
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', function(e) {
