@@ -178,7 +178,12 @@ document.getElementById("checkoutBtn").addEventListener("click", function(e){
 
     message += `%0A💰 Total: PKR ${total}`;
 
-    window.open(
+    await addDoc(collection(db, "orders"), {
+  items: cart,
+  total: total,
+  orderDate: new Date().toISOString()
+});
+  window.open(
         `https://wa.me/923494908724?text=${message}`,
         "_blank"
     );
