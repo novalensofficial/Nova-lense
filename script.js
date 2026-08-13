@@ -161,7 +161,7 @@ remove.addEventListener("click", () => {
   });
 });
 
-document.getElementById("checkoutBtn").addEventListener("click", function(e){
+document.getElementById("checkoutBtn").addEventListener("click", async (e) => {
 
     e.preventDefault();
 
