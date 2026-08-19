@@ -1,4 +1,4 @@
-// ===============================
+7// ===============================
 // EMAILJS
 // ===============================
 
@@ -1071,3 +1071,8 @@ updateCart();ction() {
     );
 
   });
+document.querySelectorAll(".cart-btn").forEach(function(button) {
+  button.addEventListener("click", function() {
+    alert("ADD TO CART BUTTON WORKING ✅");
+  });
+});
