@@ -2,7 +2,6 @@
 // EMAILJS
 // ===============================
 
-import emailjs from "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/+esm";
 
 emailjs.init({
   publicKey: "Lid3wmOPISObRCJjn"
