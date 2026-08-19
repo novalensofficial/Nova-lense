@@ -45,11 +45,15 @@ window.addEventListener("scroll", () => {
   if (!header) return;
 
   if (window.scrollY > 80) {
+
     header.style.boxShadow =
       "0 10px 30px rgba(0,0,0,.15)";
+
   } else {
+
     header.style.boxShadow =
       "0 5px 20px rgba(0,0,0,.12)";
+
   }
 
 });
@@ -63,40 +67,45 @@ const items = document.querySelectorAll(
   ".feature-box, .card, .review-card"
 );
 
-const observer = new IntersectionObserver(
-  entries => {
+if ("IntersectionObserver" in window) {
 
-    entries.forEach(entry => {
+  const observer = new IntersectionObserver(
+    entries => {
 
-      if (entry.isIntersecting) {
+      entries.forEach(entry => {
 
-        entry.target.style.opacity = "1";
-        entry.target.style.transform =
-          "translateY(0)";
+        if (entry.isIntersecting) {
 
-      }
+          entry.target.style.opacity = "1";
 
-    });
+          entry.target.style.transform =
+            "translateY(0)";
 
-  },
-  {
-    threshold: 0.2
-  }
-);
+        }
 
-items.forEach(item => {
+      });
 
-  item.style.opacity = "0";
+    },
+    {
+      threshold: 0.2
+    }
+  );
 
-  item.style.transform =
-    "translateY(40px)";
+  items.forEach(item => {
 
-  item.style.transition =
-    "0.6s ease";
+    item.style.opacity = "0";
 
-  observer.observe(item);
+    item.style.transform =
+      "translateY(40px)";
 
-});
+    item.style.transition =
+      "0.6s ease";
+
+    observer.observe(item);
+
+  });
+
+}
 
 
 // ===============================
@@ -106,6 +115,11 @@ items.forEach(item => {
 document.querySelectorAll(".order-btn").forEach(btn => {
 
   btn.addEventListener("click", function(e) {
+
+    // WhatsApp link ko normal kaam karne do
+    if (this.target === "_blank") {
+      return;
+    }
 
     e.preventDefault();
 
@@ -134,16 +148,27 @@ let cart = [];
 let total = 0;
 
 
+// ===============================
+// TOGGLE CART
+// ===============================
+
 function toggleCart() {
 
   const cartBox =
     document.getElementById("cart");
 
-  if (cartBox) {
-    cartBox.classList.toggle("active");
-  }
+  if (!cartBox) return;
+
+  cartBox.classList.toggle("active");
 
 }
+
+
+// IMPORTANT:
+// Because script.js is type="module",
+// inline HTML onclick needs window function.
+
+window.toggleCart = toggleCart;
 
 
 // ===============================
@@ -169,7 +194,7 @@ document.querySelectorAll(".cart-btn").forEach(button => {
 
     const name =
       nameElement
-        ? nameElement.innerText
+        ? nameElement.innerText.trim()
         : "Contact Lens";
 
 
@@ -179,11 +204,14 @@ document.querySelectorAll(".cart-btn").forEach(button => {
         : "";
 
 
+    // All current Nova Lens products are PKR 1499
     const price = 1499;
 
 
     const existing =
-      cart.find(item => item.name === name);
+      cart.find(item =>
+        item.name === name
+      );
 
 
     if (existing) {
@@ -207,24 +235,40 @@ document.querySelectorAll(".cart-btn").forEach(button => {
     }
 
 
-    total = cart.reduce(
-      (sum, item) =>
-        sum +
-        item.price *
-        item.units,
-      0
-    );
-
+    calculateTotal();
 
     updateCart();
 
-    document
-      .getElementById("cart")
-      ?.classList.add("active");
+
+    const cartBox =
+      document.getElementById("cart");
+
+    if (cartBox) {
+      cartBox.classList.add("active");
+    }
 
   });
 
 });
+
+
+// ===============================
+// CALCULATE TOTAL
+// ===============================
+
+function calculateTotal() {
+
+  total = cart.reduce(
+    (sum, item) => {
+
+      return sum +
+        (item.price * item.units);
+
+    },
+    0
+  );
+
+}
 
 
 // ===============================
@@ -234,13 +278,19 @@ document.querySelectorAll(".cart-btn").forEach(button => {
 function updateCart() {
 
   const cartItems =
-    document.getElementById("cart-items");
+    document.getElementById(
+      "cart-items"
+    );
 
   const cartTotal =
-    document.getElementById("cart-total");
+    document.getElementById(
+      "cart-total"
+    );
 
   const cartCount =
-    document.getElementById("cartCount");
+    document.getElementById(
+      "cartCount"
+    );
 
 
   if (cartItems) {
@@ -279,6 +329,7 @@ function updateCart() {
           <div class="qty">
 
             <button
+              type="button"
               class="minus"
               data-index="${index}">
               −
@@ -291,6 +342,7 @@ function updateCart() {
 
 
             <button
+              type="button"
               class="plus"
               data-index="${index}">
               +
@@ -300,6 +352,7 @@ function updateCart() {
 
 
           <button
+            type="button"
             class="remove"
             data-index="${index}">
             ✖
@@ -317,7 +370,9 @@ function updateCart() {
     });
 
 
+    // =========================
     // PLUS
+    // =========================
 
     cartItems
       .querySelectorAll(".plus")
@@ -330,6 +385,8 @@ function updateCart() {
             const index =
               Number(this.dataset.index);
 
+            if (!cart[index]) return;
+
             cart[index].units++;
 
             refreshCart();
@@ -340,7 +397,9 @@ function updateCart() {
       });
 
 
+    // =========================
     // MINUS
+    // =========================
 
     cartItems
       .querySelectorAll(".minus")
@@ -352,6 +411,8 @@ function updateCart() {
 
             const index =
               Number(this.dataset.index);
+
+            if (!cart[index]) return;
 
 
             if (cart[index].units > 1) {
@@ -373,7 +434,9 @@ function updateCart() {
       });
 
 
+    // =========================
     // REMOVE
+    // =========================
 
     cartItems
       .querySelectorAll(".remove")
@@ -385,6 +448,8 @@ function updateCart() {
 
             const index =
               Number(this.dataset.index);
+
+            if (!cart[index]) return;
 
             cart.splice(index, 1);
 
@@ -399,7 +464,10 @@ function updateCart() {
 
 
   if (cartTotal) {
-    cartTotal.innerText = total;
+
+    cartTotal.innerText =
+      total.toLocaleString("en-PK");
+
   }
 
 
@@ -423,13 +491,7 @@ function updateCart() {
 
 function refreshCart() {
 
-  total = cart.reduce(
-    (sum, item) =>
-      sum +
-      item.price *
-      item.units,
-    0
-  );
+  calculateTotal();
 
   updateCart();
 
@@ -455,6 +517,10 @@ if (checkoutBtn) {
       e.preventDefault();
 
 
+      // ==========================
+      // EMPTY CART
+      // ==========================
+
       if (cart.length === 0) {
 
         alert(
@@ -466,7 +532,106 @@ if (checkoutBtn) {
       }
 
 
+      // ==========================
+      // CUSTOMER DETAILS
+      // ==========================
+
+      const customerName =
+        document
+          .getElementById("customer-name")
+          ?.value
+          .trim() || "";
+
+
+      const customerPhone =
+        document
+          .getElementById("customer-phone")
+          ?.value
+          .trim() || "";
+
+
+      const customerEmail =
+        document
+          .getElementById("customer-email")
+          ?.value
+          .trim() || "";
+
+
+      const customerCity =
+        document
+          .getElementById("customer-city")
+          ?.value
+          .trim() || "";
+
+
+      const customerAddress =
+        document
+          .getElementById("customer-address")
+          ?.value
+          .trim() || "";
+
+
+      const payment =
+        document.querySelector(
+          'input[name="payment"]:checked'
+        )?.value || "Cash on Delivery";
+
+
+      // ==========================
+      // VALIDATION
+      // ==========================
+
+      if (!customerName) {
+
+        alert("Please enter your full name.");
+
+        return;
+
+      }
+
+
+      if (!customerPhone) {
+
+        alert("Please enter your phone number.");
+
+        return;
+
+      }
+
+
+      if (!customerEmail) {
+
+        alert(
+          "Please enter your email address.\n\n" +
+          "Order confirmation email isi address par jayegi."
+        );
+
+        return;
+
+      }
+
+
+      if (!customerCity) {
+
+        alert("Please enter your city.");
+
+        return;
+
+      }
+
+
+      if (!customerAddress) {
+
+        alert("Please enter your complete address.");
+
+        return;
+
+      }
+
+
+      // ==========================
       // ORDER ID
+      // ==========================
 
       const orderId =
         "NL-" +
@@ -475,11 +640,17 @@ if (checkoutBtn) {
           .slice(-6);
 
 
+      // ==========================
       // DATE
+      // ==========================
 
       const orderTime =
         new Date().toLocaleString(
-          "en-PK"
+          "en-PK",
+          {
+            dateStyle: "medium",
+            timeStyle: "short"
+          }
         );
 
 
@@ -490,7 +661,8 @@ if (checkoutBtn) {
       const orderItems =
         cart.map(item => ({
 
-          name: item.name,
+          name:
+            item.name,
 
           units:
             item.units || 1,
@@ -506,19 +678,63 @@ if (checkoutBtn) {
 
 
       // ==========================
+      // TEXT ORDER ITEMS
+      // ==========================
+
+      const orderItemsText =
+        cart.map(
+          (item, index) => {
+
+            const itemTotal =
+              item.price *
+              item.units;
+
+            return (
+              `${index + 1}. ${item.name}` +
+              ` | Qty: ${item.units}` +
+              ` | PKR ${itemTotal}`
+            );
+
+          }
+        ).join("\n");
+
+
+      // ==========================
       // EMAIL PARAMETERS
       // ==========================
 
       const templateParams = {
 
+        // CUSTOMER EMAIL
         email:
-          "novalens.official786@gmail.com",
+          customerEmail,
 
         order_id:
           orderId,
 
+        order_date:
+          orderTime,
+
+        customer_name:
+          customerName,
+
+        customer_phone:
+          customerPhone,
+
+        customer_city:
+          customerCity,
+
+        customer_address:
+          customerAddress,
+
+        payment_method:
+          payment,
+
         orders:
           orderItems,
+
+        order_items:
+          orderItemsText,
 
         "cost.shipping":
           0,
@@ -532,10 +748,20 @@ if (checkoutBtn) {
       };
 
 
+      // ==========================
+      // DISABLE BUTTON
+      // ==========================
+
+      checkoutBtn.disabled = true;
+
+      checkoutBtn.innerText =
+        "Processing...";
+
+
       try {
 
         // ========================
-        // SEND EMAIL
+        // CUSTOMER EMAIL
         // ========================
 
         await emailjs.send(
@@ -550,7 +776,32 @@ if (checkoutBtn) {
 
 
         // ========================
-        // WHATSAPP
+        // ADMIN EMAIL
+        // ========================
+
+        const adminParams = {
+
+          ...templateParams,
+
+          email:
+            "novalens.official786@gmail.com"
+
+        };
+
+
+        await emailjs.send(
+
+          "service_9kp2qxe",
+
+          "template_ylr15kg",
+
+          adminParams
+
+        );
+
+
+        // ========================
+        // WHATSAPP MESSAGE
         // ========================
 
         let message =
@@ -562,7 +813,31 @@ if (checkoutBtn) {
 
 
         message +=
-          `Date: ${orderTime}%0A%0A`;
+          `Date: ${encodeURIComponent(orderTime)}%0A%0A`;
+
+
+        message +=
+          `👤 Name: ${encodeURIComponent(customerName)}%0A`;
+
+
+        message +=
+          `📞 Phone: ${encodeURIComponent(customerPhone)}%0A`;
+
+
+        message +=
+          `📧 Email: ${encodeURIComponent(customerEmail)}%0A`;
+
+
+        message +=
+          `🏙️ City: ${encodeURIComponent(customerCity)}%0A`;
+
+
+        message +=
+          `🏠 Address: ${encodeURIComponent(customerAddress)}%0A`;
+
+
+        message +=
+          `💳 Payment: ${encodeURIComponent(payment)}%0A%0A`;
 
 
         cart.forEach(
@@ -574,7 +849,7 @@ if (checkoutBtn) {
 
 
             message +=
-              `${index + 1}. ${item.name}%0A`;
+              `${index + 1}. ${encodeURIComponent(item.name)}%0A`;
 
             message +=
               `Qty: ${item.units}%0A`;
@@ -589,6 +864,10 @@ if (checkoutBtn) {
         message +=
           `💰 *TOTAL: PKR ${total}*`;
 
+
+        // ========================
+        // OPEN WHATSAPP
+        // ========================
 
         window.open(
 
@@ -606,8 +885,62 @@ if (checkoutBtn) {
         alert(
           "Order placed successfully! ✅\n\n" +
           "Order ID: " +
-          orderId
+          orderId +
+          "\n\n" +
+          "Confirmation email customer ko bhej di gayi hai."
         );
+
+
+        // ========================
+        // CLEAR CART
+        // ========================
+
+        cart = [];
+
+        total = 0;
+
+        updateCart();
+
+
+        // ========================
+        // CLOSE CART
+        // ========================
+
+        const cartBox =
+          document.getElementById("cart");
+
+        if (cartBox) {
+
+          cartBox.classList.remove(
+            "active"
+          );
+
+        }
+
+
+        // ========================
+        // CLEAR FORM
+        // ========================
+
+        const formFields = [
+          "customer-name",
+          "customer-phone",
+          "customer-email",
+          "customer-city",
+          "customer-address"
+        ];
+
+
+        formFields.forEach(id => {
+
+          const field =
+            document.getElementById(id);
+
+          if (field) {
+            field.value = "";
+          }
+
+        });
 
 
       } catch (error) {
@@ -620,8 +953,15 @@ if (checkoutBtn) {
 
         alert(
           "Order email send nahi ho saka. ❌\n\n" +
-          "Please try again."
+          "Please check your email and try again."
         );
+
+      } finally {
+
+        checkoutBtn.disabled = false;
+
+        checkoutBtn.innerText =
+          "Place Order";
 
       }
 
@@ -688,6 +1028,22 @@ document
     btn.addEventListener(
       "click",
       function() {
+
+        this.classList.toggle(
+          "active"
+        );
+
+      }
+    );
+
+  });
+
+
+// ===============================
+// INITIAL CART
+// ===============================
+
+updateCart();ction() {
 
         this.classList.toggle(
           "active"
