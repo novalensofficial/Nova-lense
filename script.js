@@ -1,4 +1,4 @@
-7// ===============================
+// ===============================
 // EMAILJS
 // ===============================
 
@@ -20,7 +20,6 @@ let total = 0;
 // ===============================
 
 function toggleCart() {
-
   const cartBox = document.getElementById("cart");
 
   if (!cartBox) return;
@@ -74,8 +73,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
       updateCart();
 
-      const cartBox =
-        document.getElementById("cart");
+      // Open cart automatically
+      const cartBox = document.getElementById("cart");
 
       if (cartBox) {
         cartBox.classList.add("active");
@@ -87,16 +86,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
   // ===============================
-  // CHECKOUT
+  // CHECKOUT BUTTON
   // ===============================
 
   const checkoutBtn =
     document.getElementById("checkoutBtn");
 
   if (checkoutBtn) {
-
     checkoutBtn.addEventListener("click", placeOrder);
-
   }
 
 
@@ -114,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const value =
         this.value.toLowerCase().trim();
 
-      document.querySelectorAll(".card").forEach(card => {
+      document.querySelectorAll(".card").forEach(function (card) {
 
         const name =
           card.querySelector("h3")?.innerText
@@ -134,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // WISHLIST
   // ===============================
 
-  document.querySelectorAll(".wishlist").forEach(btn => {
+  document.querySelectorAll(".wishlist").forEach(function (btn) {
 
     btn.addEventListener("click", function () {
 
@@ -163,17 +160,29 @@ function updateCart() {
     document.getElementById("cartCount");
 
 
+  // Calculate total
   total = cart.reduce(function (sum, item) {
 
-    return sum +
-      (item.price * item.units);
+    return sum + (item.price * item.units);
 
   }, 0);
 
 
+  // ===============================
+  // CART ITEMS
+  // ===============================
+
   if (cartItems) {
 
     cartItems.innerHTML = "";
+
+
+    if (cart.length === 0) {
+
+      cartItems.innerHTML =
+        '<p class="empty-cart">Your cart is empty.</p>';
+
+    }
 
 
     cart.forEach(function (item, index) {
@@ -188,17 +197,33 @@ function updateCart() {
 
         <div class="cart-row">
 
-          <div>
+          <div class="cart-product">
 
-            <strong>${item.name}</strong>
+            <img
+              src="${item.image_url}"
+              alt="${item.name}"
+              style="
+                width:55px;
+                height:55px;
+                object-fit:cover;
+                border-radius:8px;
+              "
+            >
 
-            <br>
+            <div>
 
-            <small>
-              PKR ${item.price.toLocaleString()}
-            </small>
+              <strong>${item.name}</strong>
+
+              <br>
+
+              <small>
+                PKR ${item.price.toLocaleString()}
+              </small>
+
+            </div>
 
           </div>
+
 
           <div class="qty">
 
@@ -209,7 +234,9 @@ function updateCart() {
               −
             </button>
 
-            <span>${item.units}</span>
+            <span>
+              ${item.units}
+            </span>
 
             <button
               type="button"
@@ -219,6 +246,7 @@ function updateCart() {
             </button>
 
           </div>
+
 
           <button
             type="button"
@@ -238,75 +266,91 @@ function updateCart() {
     });
 
 
+    // ===============================
     // PLUS
+    // ===============================
 
-    cartItems.querySelectorAll(".plus").forEach(button => {
+    cartItems
+      .querySelectorAll(".plus")
+      .forEach(function (button) {
 
-      button.addEventListener("click", function () {
+        button.addEventListener("click", function () {
 
-        const index =
-          Number(this.dataset.index);
+          const index =
+            Number(this.dataset.index);
 
-        if (!cart[index]) return;
+          if (!cart[index]) return;
 
-        cart[index].units++;
+          cart[index].units++;
 
-        updateCart();
+          updateCart();
+
+        });
 
       });
 
-    });
 
-
+    // ===============================
     // MINUS
+    // ===============================
 
-    cartItems.querySelectorAll(".minus").forEach(button => {
+    cartItems
+      .querySelectorAll(".minus")
+      .forEach(function (button) {
 
-      button.addEventListener("click", function () {
+        button.addEventListener("click", function () {
 
-        const index =
-          Number(this.dataset.index);
+          const index =
+            Number(this.dataset.index);
 
-        if (!cart[index]) return;
+          if (!cart[index]) return;
 
-        if (cart[index].units > 1) {
+          if (cart[index].units > 1) {
 
-          cart[index].units--;
+            cart[index].units--;
 
-        } else {
+          } else {
+
+            cart.splice(index, 1);
+
+          }
+
+          updateCart();
+
+        });
+
+      });
+
+
+    // ===============================
+    // REMOVE
+    // ===============================
+
+    cartItems
+      .querySelectorAll(".remove")
+      .forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+          const index =
+            Number(this.dataset.index);
+
+          if (!cart[index]) return;
 
           cart.splice(index, 1);
 
-        }
+          updateCart();
 
-        updateCart();
-
-      });
-
-    });
-
-
-    // REMOVE
-
-    cartItems.querySelectorAll(".remove").forEach(button => {
-
-      button.addEventListener("click", function () {
-
-        const index =
-          Number(this.dataset.index);
-
-        if (!cart[index]) return;
-
-        cart.splice(index, 1);
-
-        updateCart();
+        });
 
       });
-
-    });
 
   }
 
+
+  // ===============================
+  // TOTAL
+  // ===============================
 
   if (cartTotal) {
 
@@ -316,13 +360,18 @@ function updateCart() {
   }
 
 
+  // ===============================
+  // CART COUNT
+  // ===============================
+
   if (cartCount) {
 
     cartCount.innerText =
-      cart.reduce(
-        (sum, item) => sum + item.units,
-        0
-      );
+      cart.reduce(function (sum, item) {
+
+        return sum + item.units;
+
+      }, 0);
 
   }
 
@@ -335,9 +384,12 @@ function updateCart() {
 
 async function placeOrder(e) {
 
-  if (e) e.preventDefault();
+  if (e) {
+    e.preventDefault();
+  }
 
 
+  // Cart check
   if (cart.length === 0) {
 
     alert("Your cart is empty.");
@@ -347,7 +399,9 @@ async function placeOrder(e) {
   }
 
 
+  // ===============================
   // CUSTOMER DETAILS
+  // ===============================
 
   const customerName =
     document.getElementById("customer-name")
@@ -375,7 +429,9 @@ async function placeOrder(e) {
     )?.value || "Cash on Delivery";
 
 
+  // ===============================
   // VALIDATION
+  // ===============================
 
   if (!customerName) {
 
@@ -418,7 +474,9 @@ async function placeOrder(e) {
   }
 
 
+  // ===============================
   // ORDER ID
+  // ===============================
 
   const orderId =
     "NL-" +
@@ -431,26 +489,32 @@ async function placeOrder(e) {
     new Date().toLocaleString("en-PK");
 
 
+  // ===============================
   // ORDER ITEMS
+  // ===============================
 
   const orderItems =
-    cart.map(item => ({
+    cart.map(function (item) {
 
-      name: item.name,
+      return {
 
-      units: item.units,
+        name: item.name,
 
-      price:
-        item.price * item.units,
+        units: item.units,
 
-      image_url:
-        item.image_url
+        price:
+          item.price * item.units,
 
-    }));
+        image_url:
+          item.image_url || ""
+
+      };
+
+    });
 
 
   const orderItemsText =
-    cart.map((item, index) => {
+    cart.map(function (item, index) {
 
       const itemTotal =
         item.price * item.units;
@@ -464,7 +528,9 @@ async function placeOrder(e) {
     }).join("\n");
 
 
-  // EMAIL DATA
+  // ===============================
+  // EMAIL PARAMETERS
+  // ===============================
 
   const templateParams = {
 
@@ -512,6 +578,7 @@ async function placeOrder(e) {
 
   const checkoutBtn =
     document.getElementById("checkoutBtn");
+
 
   if (checkoutBtn) {
 
@@ -572,6 +639,7 @@ async function placeOrder(e) {
     let message =
       "🛒 *NOVA LENS ORDER*%0A%0A";
 
+
     message +=
       `Order ID: ${encodeURIComponent(orderId)}%0A`;
 
@@ -624,6 +692,10 @@ async function placeOrder(e) {
     );
 
 
+    // ===============================
+    // SUCCESS
+    // ===============================
+
     alert(
       "Order placed successfully! ✅\n\n" +
       "Order ID: " +
@@ -631,7 +703,9 @@ async function placeOrder(e) {
     );
 
 
+    // ===============================
     // CLEAR CART
+    // ===============================
 
     cart = [];
 
@@ -650,6 +724,26 @@ async function placeOrder(e) {
     }
 
 
+    // Clear form
+
+    [
+      "customer-name",
+      "customer-phone",
+      "customer-email",
+      "customer-city",
+      "customer-address"
+    ].forEach(function (id) {
+
+      const field =
+        document.getElementById(id);
+
+      if (field) {
+        field.value = "";
+      }
+
+    });
+
+
   } catch (error) {
 
     console.error(
@@ -657,7 +751,33 @@ async function placeOrder(e) {
       error
     );
 
+
     alert(
+      "Order email send nahi ho saka. ❌\n\n" +
+      "Please check EmailJS settings."
+    );
+
+  } finally {
+
+    if (checkoutBtn) {
+
+      checkoutBtn.disabled = false;
+
+      checkoutBtn.innerText =
+        "Place Order";
+
+    }
+
+  }
+
+}
+
+
+// ===============================
+// INITIAL CART
+// ===============================
+
+updateCart();rt(
       "Email send nahi ho saki. ❌\n\n" +
       "Please check EmailJS settings."
     );
